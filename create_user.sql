@@ -1,0 +1,3 @@
+CREATE USER 'wiki'@'%' IDENTIFIED BY 'm3d!@W!k!';
+GRANT ALL PRIVILEGES ON mediawiki.* TO 'wiki'@'%';
+FLUSH PRIVILEGES;

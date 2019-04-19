@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wkmedia
+  labels:
+    app: wkmedia
+spec:
+  ports:
+     - nodePort: 30080
+       port: 80 
+       protocol: TCP
+       targetPort: 80
+  selector:
+    app: wkmedia
+    tier: frontend
+  type: NodePort
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: wkmedia
+  labels:
+    app: wkmedia
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wkmedia
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wkmedia
+        tier: frontend
+    spec:
+      containers:
+      - image: harshalk91/mediawiki
+        name: wkmedia
+        ports:
+        - containerPort: 80
+          name: wkmedia

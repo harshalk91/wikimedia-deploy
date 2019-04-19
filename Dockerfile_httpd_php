@@ -1,0 +1,28 @@
+FROM centos:latest
+
+RUN yum install -y wget && \
+     wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm && \
+     wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm && \
+     rpm -Uvh remi-release-7.rpm epel-release-latest-7.noarch.rpm && \
+     yum install yum-utils && \
+     yum-config-manager --enable remi-php72 && \
+     yum install httpd php php-mysql php-gd php-xml mariadb-server mariadb php-mbstring -y
+ 
+ 
+RUN cd /tmp && wget https://releases.wikimedia.org/mediawiki/1.32/mediawiki-1.32.0.tar.gz && \
+     wget https://releases.wikimedia.org/mediawiki/1.32/mediawiki-1.32.0.tar.gz.sig && \
+     cd /var/www && \
+     tar -zxf /tmp/mediawiki-1.32.0.tar.gz && \
+     ln -s mediawiki-1.32.0/ mediawiki && \
+     chown -R apache:apache /var/www/mediawiki-1.32.0
+ 
+COPY httpd.conf /etc/httpd/conf/httpd.conf
+
+COPY LocalSettings.php /var/www/mediawiki/
+ 
+WORKDIR /var/www/mediawiki
+ 
+EXPOSE 80
+ 
+CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"] 
+
