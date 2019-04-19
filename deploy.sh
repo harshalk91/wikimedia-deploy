@@ -45,17 +45,19 @@ sudo kubectl exec -i $(sudo kubectl get pods | grep mysql | awk '{print $1}') --
 
 echo "==================================================="
 echo "Deploying wikimedia application"
+
 sudo kubectl apply -f wkmedia-deployment.yaml
 
-wikimedia_pod_status=$(sudo kubectl get pods | grep wkmedia | awk '{print $3}')
-while [ "$wikimedia_pod_status" != "Running" ]
+while true
 do
-	sleep 2
-	wikimedia_pod_status=$(sudo kubectl get pods | grep wkmedia | awk '{print $3}')
-        echo "Pod Status: $wikimedia_pod_status"
+	deployment_replicas=`sudo kubectl get deployment | grep wkmedia | awk '{print $4}'`
+	if (( $deployment_replicas >= 1 ))
+	 then
+	     echo "$deployment_replicas"
+	     break
+         fi
 done
-
 echo "========================================"
 echo "Local Access Wikimedia using: `sudo minikube service wkmedia --url`"
-echo "Global Access Wikimedia using: http://`curl icanhazip.com`:30080"
+echo "Global Access Wikimedia using: http://`curl -s icanhazip.com`:30080"
 echo "========================================"
