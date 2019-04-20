@@ -25,7 +25,7 @@ sudo kubectl create secret generic mysql-secret-test --from-literal=username=$us
 
 echo "==================================================="
 echo "Deploying Mysql"
-sudo kubectl apply -f mysql-deployment.yaml 
+sudo kubectl apply -f ../conf/mysql-deployment.yaml 
 
 pod_status=$(sudo kubectl get pods | grep mysql | awk '{print $3}')
 while [ "$pod_status" != "Running" ]
@@ -41,12 +41,12 @@ sleep 15
 echo "==================================================="
 #sudo kubectl exec -i $pod_name -- mysql -u $username -p$password $database < create_user.sql
 echo "Granting privilleges"
-sudo kubectl exec -i $(sudo kubectl get pods | grep mysql | awk '{print $1}') -- mysql -u$username -p$password < create_user.sql
+sudo kubectl exec -i $(sudo kubectl get pods | grep mysql | awk '{print $1}') -- mysql -u$username -p$password < ../conf/create_user.sql
 
 echo "==================================================="
 echo "Deploying wikimedia application"
 
-sudo kubectl apply -f wkmedia-deployment.yaml
+sudo kubectl apply -f ../conf/wkmedia-deployment.yaml
 
 while true
 do
