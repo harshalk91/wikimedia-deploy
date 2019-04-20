@@ -1,0 +1,15 @@
+#!/bin/bash
+mkdir -p /home/centos/.ssh
+cat <<FILE > /home/ec2-user/.ssh/authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDC2Ckpan+R3PWjXW/EOPLdrIQwK3RnF5kiqGqDZyPyUnxUcBhYJ44g12bdYEBrbX9eI3nJ+u36NpAU/RUS79Ny7ewQUAHy+c9PX3zYgQb2iBB5oMmoOSmtLgP7PUGvUbgtlDCTkxkn8LpiSJ93waTQs/jUqK0yITiJgzU/C3RmzmtjEHJg1eiswy/xjCgpLC09QGTau0TJRN6kVpPTqmRmZqzfj6wOxX8RFqmGu6mRFLvhbOUbOzFy3T6Bv2M5lRGAfl+GQvH3S1B9J3JYL/kdmgYeqaIPYuniNC0hIZyLpAXyHsr46/m/QEc50jfNuSeVl1n+CNF6M6WCVbaFMUBx jombay@jombay-Latitude-3490
+FILE
+chown centos.centos /home/centos/.ssh/authorized_keys
+chmod 400 /home/centos/.ssh/authorized_keys
+sudo yum -y install wget unzip
+cd /home/centos
+wget https://github.com/harshalk91/wikimedia-deploy/archive/master.zip
+unzip wikimedia-deploy-master.zip
+cd wikimedia-deploy-master
+sh minikube-install.sh
+sleep 5
+sh deploy.sh
