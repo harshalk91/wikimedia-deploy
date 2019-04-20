@@ -41,7 +41,7 @@ sleep 15
 echo "==================================================="
 #sudo kubectl exec -i $pod_name -- mysql -u $username -p$password $database < create_user.sql
 echo "Granting privilleges"
-sudo kubectl exec -i $(sudo kubectl get pods | grep mysql | awk '{print $1}') -- mysql -u$username -p$password < ../conf/create_user.sql
+sudo kubectl exec -i $(sudo kubectl get pods | grep mysql | awk '{print $1}') -- mysql -u$username -p$password < create_user.sql
 
 echo "==================================================="
 echo "Deploying wikimedia application"
