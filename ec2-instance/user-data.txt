@@ -1,5 +1,4 @@
 #!/bin/bash
 yum -y install wget unzip
-wget https://github.com/harshalk91/wikimedia-deploy/archive/master.zip
-unzip master.zip
-cd /wikimedia-deploy-master && sh minikube_install.sh > /tmp/minikube_install.log 2>&1 && sleep 5 && sh deploy.sh > /tmp/deploy.log 2>&1
+cd /opt && wget https://github.com/harshalk91/wikimedia-deploy/archive/master.zip && unzip master.zip
+cd /opt/wikimedia-deploy-master && sh minikube_install.sh > minikube_install.log 2>&1 && sleep 5 && sh deploy.sh > deploy.log 2>&1
