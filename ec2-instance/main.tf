@@ -1,14 +1,14 @@
 resource "aws_instance" "my-test-instance" {
-  ami             = "ami-02e60be79e78fef21" 
-  instance_type   = "t2.medium"
-  vpc_security_group_ids  = ["sg-01fe62c6f88a2ffa2"]
-  subnet_id	  = "subnet-0c59f2b12acdcefd5"
-  key_name 	  = "demo_mediawiki"
+  ami             = "${var.ami}" 
+  instance_type   = "${var.instance_type}"
+  vpc_security_group_ids  = "${var.vpc_security_group_ids}"
+  subnet_id	  = "${var.subnet_id}"
+  key_name 	  = "${var.key_name}"
   associate_public_ip_address = true
   user_data = "${file("user-data.txt")}"
 
   tags {
-    Name = "test-instance"
+    Name = "demo-tw-assignment"
   }
 }
 

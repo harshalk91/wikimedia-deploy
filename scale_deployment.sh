@@ -1,4 +1,5 @@
 #echo "Enter number of replicas:"
+echo "Enter Replica Count:"
 read count
 
 sudo kubectl scale --replicas=$count deployment/wkmedia
