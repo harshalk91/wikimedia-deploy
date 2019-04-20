@@ -25,7 +25,7 @@ sudo kubectl create secret generic mysql-secret-test --from-literal=username=$us
 
 echo "==================================================="
 echo "Deploying Mysql"
-sudo kubectl apply -f mysql-deployment.yaml 
+sudo kubectl apply -f ../conf/mysql-deployment.yaml 
 
 pod_status=$(sudo kubectl get pods | grep mysql | awk '{print $3}')
 while [ "$pod_status" != "Running" ]
@@ -46,7 +46,7 @@ sudo kubectl exec -i $(sudo kubectl get pods | grep mysql | awk '{print $1}') --
 echo "==================================================="
 echo "Deploying wikimedia application"
 
-sudo kubectl apply -f wkmedia-deployment.yaml
+sudo kubectl apply -f ../conf/wkmedia-deployment.yaml
 
 while true
 do
