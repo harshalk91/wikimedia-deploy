@@ -45,7 +45,7 @@ spec:
         tier: mysql
     spec:
       containers:
-      - image: mariadb:latest 
+      - image: mariadb:latest
         name: mysql
         env:
         - name: MYSQL_ROOT_PASSWORD
@@ -53,7 +53,7 @@ spec:
             secretKeyRef:
               name: mysql-secret-test
               key: password
-        
+
         - name: MYSQL_USER
           valueFrom:
             secretKeyRef:
@@ -71,7 +71,13 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
+        - name: app-db-script-vol
+          mountPath: /scripts
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-pv-claim
+      - name: app-db-script-vol
+        configMap:
+           name: appusers
+           defaultMode: 0744
