@@ -22,7 +22,7 @@ database=$(echo bWVkaWF3aWtpCg== | base64 --decode)
 
 echo "Creating Secrets"
 sudo kubectl create secret generic mysql-secret-test --from-literal=username=$username --from-literal=password=$password --from-literal=database=$database
-
+sudo kubectl create configmap appusers --from-file=./create_user.sql
 echo "==================================================="
 echo "Deploying Mysql"
 sudo kubectl apply -f ../conf/mysql-deployment.yaml 
